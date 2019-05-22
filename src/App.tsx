@@ -2,6 +2,7 @@ import * as React from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import FooView from "./views/FooView";
 import BarView from "./views/BarView";
+import "./styles/main.scss";
 
 export function App() {
     return (
