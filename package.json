@@ -2,7 +2,7 @@
   "name": "client",
   "version": "1.0.0",
   "description": "",
-  "main": "main-process.js",
+  "main": "dist/main-process.js",
   "scripts": {
     "build": "npx webpack --config webpack.config.js",
     "start": "npx electron ."

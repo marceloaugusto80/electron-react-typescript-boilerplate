@@ -19,7 +19,8 @@ module.exports = {
     devtool: "inline-source-map",
 
     entry: {
-        renderProcess: "./render-process.tsx"
+        "render-process": "./render-process.tsx",
+        "main-process": "./main-process.ts"
     },
 
     output: {
