@@ -2,6 +2,7 @@ const path = require("path");
 const HtmlPlugin = require("html-webpack-plugin");
 const HtmlExternalsPlugin = require("html-webpack-externals-plugin");
 const CleanPlugin = require("clean-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
 
@@ -34,6 +35,21 @@ module.exports = {
 
     module: {
         rules: [
+
+            {
+                test: /\.scss$/,
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            hmr: true
+                        }
+                    },
+                    "css-loader",
+                    "sass-loader"
+                ]
+            },
+
             {
                 test: /\.(js|jsx|ts|tsx)$/,
                 exclude: /node_modules/,
@@ -52,20 +68,17 @@ module.exports = {
                     }
                 }
             },
-            {
-                test: /\.scss$/,
-                use: [
-                    "style-loader",
-                    "css-loader",
-                    "sass-loader"
-                ]
-            }
+
         ]
     },
 
     plugins: [
         new CleanPlugin({
             cleanOnceBeforeBuildPatterns: ["!main-process.js"]
+        }),
+
+        new MiniCssExtractPlugin({
+            filename: "main.css"
         }),
 
         new HtmlPlugin({
@@ -82,6 +95,7 @@ module.exports = {
                 { module: "react-router-dom", global: "ReactRouterDOM", entry: "umd/react-router-dom.js" },
             ]
         }),
+
     ],
 
     devServer: {
