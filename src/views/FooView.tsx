@@ -16,7 +16,7 @@ export default class FooView extends React.Component<RouteComponentProps, any> {
     public render() {
         return (
             <div>
-                <h3>FOO</h3>
+                <h3>FOO View</h3>
                 <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Id officiis, quos temporibus quidem aliquid provident illo doloribus quod dicta perspiciatis dolores laborum vero laboriosam. Facere voluptatem eligendi magni nesciunt molestias.
                 </p>

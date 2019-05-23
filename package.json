@@ -4,8 +4,9 @@
   "description": "",
   "main": "dist/main-process.js",
   "scripts": {
-    "build": "npx webpack --config webpack.config.js",
-    "start": "npx electron ."
+    "build": "npx webpack --config webpack.config.main.js && npx webpack --config webpack.config.renderer.js",
+    "server": "npx webpack-dev-server --config webpack.config.renderer.js --hot",
+    "start": "npx webpack --config webpack.config.main.js && npx electron ."
   },
   "author": "",
   "license": "ISC",
@@ -26,6 +27,7 @@
     "@types/node": "^11.13.4",
     "@types/react": "^16.8.13",
     "@types/react-dom": "^16.8.4",
+    "@types/react-hot-loader": "^4.1.0",
     "babel-loader": "^8.0.5",
     "clean-webpack-plugin": "^2.0.1",
     "copy-webpack-plugin": "^5.0.2",
@@ -33,10 +35,13 @@
     "electron": "^4.1.4",
     "html-webpack-externals-plugin": "^3.8.0",
     "node-sass": "^4.12.0",
+    "react-hot-loader": "^4.8.7",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "typescript": "^3.4.3",
     "webpack": "^4.30.0",
-    "webpack-cli": "^3.3.0"
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-server": "^3.4.1",
+    "webpack-merge": "^4.2.1"
   }
 }

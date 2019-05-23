@@ -8,7 +8,7 @@ module.exports = {
 
     context: path.join(__dirname, "src"),
 
-    target: "electron-renderer",
+    //target: "web",
 
     resolve: {
         extensions: [".js", ".jsx", ".ts", ".tsx", ".json"]
@@ -19,8 +19,7 @@ module.exports = {
     devtool: "inline-source-map",
 
     entry: {
-        "render-process": "./render-process.tsx",
-        "main-process": "./main-process.ts"
+        "render-process": "./render-process.tsx"
     },
 
     output: {
@@ -48,7 +47,8 @@ module.exports = {
                             "@babel/preset-env",
                         ],
                         plugins: [
-                            "@babel/plugin-proposal-class-properties"
+                            "@babel/plugin-proposal-class-properties",
+                            "react-hot-loader/babel"
                         ]
                     }
                 }
@@ -65,7 +65,9 @@ module.exports = {
     },
 
     plugins: [
-        new CleanPlugin(),
+        new CleanPlugin({
+            cleanOnceBeforeBuildPatterns: ["!main-process.js"]
+        }),
 
         new HtmlPlugin({
             filename: "index.html",
@@ -81,6 +83,11 @@ module.exports = {
                 { module: "react-router-dom", global: "ReactRouterDOM", entry: "umd/react-router-dom.js" },
             ]
         }),
+    ],
 
-    ]
+    devServer: {
+        contentBase: path.join(__dirname, "dist"),
+        compress: true,
+        port: 9000
+    }
 }

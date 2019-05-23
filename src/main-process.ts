@@ -8,7 +8,7 @@ function createWindow() {
         height: 600
     });
 
-    win.loadFile("dist/index.html");
+    win.loadURL("http://localhost:9000");
 
     win.webContents.openDevTools();
 
