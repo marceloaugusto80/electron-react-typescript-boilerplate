@@ -5,7 +5,10 @@ let win: BrowserWindow | null = null;
 function createWindow() {
     win = new BrowserWindow({
         width: 800,
-        height: 600
+        height: 600,
+        webPreferences: {
+            nodeIntegration: true
+        }
     });
 
     win.loadURL("http://localhost:9000");

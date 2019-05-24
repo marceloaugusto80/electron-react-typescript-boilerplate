@@ -8,7 +8,7 @@ module.exports = {
 
     context: path.join(__dirname, "src"),
 
-    //target: "web",
+    target: "electron-renderer",
 
     resolve: {
         extensions: [".js", ".jsx", ".ts", ".tsx", ".json"]
@@ -18,9 +18,7 @@ module.exports = {
 
     devtool: "inline-source-map",
 
-    entry: {
-        "render-process": "./render-process.tsx"
-    },
+    entry: ["./render-process.tsx"],
 
     output: {
         filename: "[name].js",
@@ -55,17 +53,6 @@ module.exports = {
                 exclude: /node_modules/,
                 use: {
                     loader: "babel-loader",
-                    options: {
-                        presets: [
-                            "@babel/preset-typescript",
-                            "@babel/preset-react",
-                            "@babel/preset-env",
-                        ],
-                        plugins: [
-                            "@babel/plugin-proposal-class-properties",
-                            "react-hot-loader/babel"
-                        ]
-                    }
                 }
             },
 
