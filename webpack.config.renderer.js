@@ -8,11 +8,7 @@ module.exports = {
 
     context: path.join(__dirname, "src"),
 
-    target: "web",
-
-    // node: {
-    //     fs: 'empty',
-    // },
+    target: "web", // any other target value makes react-hot-loader stop working
 
     resolve: {
         extensions: [".js", ".jsx", ".ts", ".tsx", ".json"]
@@ -22,7 +18,7 @@ module.exports = {
 
     devtool: "inline-source-map",
 
-    entry: ["./render-process.tsx"],
+    entry: ["@babel/polyfill", "./render-process.tsx"],
 
     output: {
         filename: "[name].js",
@@ -33,7 +29,7 @@ module.exports = {
         "react": "React",
         "react-dom": "ReactDOM",
         "react-router-dom": "ReactRouterDOM",
-        "fs": "require('fs')"
+        "fs": "require('fs')" // we must add node native functions as externals to be able to use them
     },
 
     module: {
@@ -66,7 +62,7 @@ module.exports = {
 
     plugins: [
         new CleanPlugin({
-            cleanOnceBeforeBuildPatterns: ["!main-process.js"]
+            cleanOnceBeforeBuildPatterns: ["!main-process.js"] // config for electron-main deletes this file
         }),
 
         new MiniCssExtractPlugin({

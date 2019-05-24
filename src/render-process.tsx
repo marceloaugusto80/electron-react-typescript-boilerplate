@@ -1,4 +1,3 @@
-import "@babel/polyfill";
 import * as DOM from "react-dom";
 import * as React from "react";
 import { hot } from "react-hot-loader/root";
