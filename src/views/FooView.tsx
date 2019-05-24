@@ -64,7 +64,7 @@ export default class FooView extends React.Component<RouteComponentProps, State>
     public render() {
         return (
             <div>
-                <h3>FOO View s</h3>
+                <h3>FOO View</h3>
                 <p>
                     {this.state.text}
                 </p>

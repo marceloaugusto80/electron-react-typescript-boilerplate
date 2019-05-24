@@ -8,7 +8,11 @@ module.exports = {
 
     context: path.join(__dirname, "src"),
 
-    target: "electron-renderer",
+    target: "web",
+
+    // node: {
+    //     fs: 'empty',
+    // },
 
     resolve: {
         extensions: [".js", ".jsx", ".ts", ".tsx", ".json"]
@@ -28,7 +32,8 @@ module.exports = {
     externals: {
         "react": "React",
         "react-dom": "ReactDOM",
-        "react-router-dom": "ReactRouterDOM"
+        "react-router-dom": "ReactRouterDOM",
+        "fs": "require('fs')"
     },
 
     module: {
