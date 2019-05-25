@@ -1,6 +1,14 @@
 import { app, BrowserWindow } from "electron";
 
+declare const ENVIRONMENT: String;
+
+const IS_DEV = ENVIRONMENT == "development";
+const DEV_SERVER_URL = "http://localhost:9000";
+const HTML_FILE_PATH = "index.html";
+
+
 let win: BrowserWindow | null = null;
+
 
 function createWindow() {
     win = new BrowserWindow({
@@ -11,9 +19,14 @@ function createWindow() {
         }
     });
 
-    win.loadURL("http://localhost:9000");
+    if (IS_DEV) {
+        win.loadURL(DEV_SERVER_URL);
+        win.webContents.openDevTools();
+    }
+    else {
+        win.loadFile(HTML_FILE_PATH);
+    }
 
-    win.webContents.openDevTools();
 
     win.on("closed", () => {
         win = null

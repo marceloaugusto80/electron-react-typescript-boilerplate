@@ -5,22 +5,24 @@
 #### Template project for desktop apps using [Electron](https://electronjs.org/), [React](https://reactjs.org/) and [Typescript](https://www.typescriptlang.org/).
 
 ---
+<br>
+<br>
+<br>
 
-## Before everything
+# Before everything
 As always, install packages:
 ```
 npm install
 ```
 
 
+# During development
 
-## How to build
-```
-npm run build
-```
+As this project uses [react-hot-loader](https://github.com/gaearon/react-hot-loader) during development, we need to launch [webpack-dev-server](https://github.com/webpack/webpack-dev-server) in a process and Electron in another. 
+<br>
+<br>
+So, in the terminal, run:
 
-
-## During development
 ```
 npm run server
 ```
@@ -28,4 +30,12 @@ then, in another terminal instance:
 ```
 npm start
 ```
+
+
+# Deploy
+Just run:
+```
+npm run pack
+```
+and the output will be in the ```./pack``` folder.
 
