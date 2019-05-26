@@ -54,8 +54,7 @@ function createRenderConfig(isDev) {
                         {
                             loader: MiniCssExtractPlugin.loader,
                             options: {
-                                hmr: isDev,
-                                filename: isDev ? "[name].css" : "[name].[hash].css"
+                                hmr: isDev
                             }
                         },
                         "css-loader",
