@@ -1,7 +1,7 @@
 const path = require("path");
 const HtmlPlugin = require("html-webpack-plugin");
 const HtmlExternalsPlugin = require("html-webpack-externals-plugin");
-const CleanPlugin = require("clean-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const DefinePlugin = require("webpack").DefinePlugin;
 const CopyWebpackPlugin = require("copy-webpack-plugin");
@@ -86,7 +86,7 @@ function createRenderConfig(isDev) {
 
         plugins: [
 
-            new CleanPlugin({
+            new CleanWebpackPlugin({
                 cleanOnceBeforeBuildPatterns: ["!main-process.*.js"] // config for electron-main deletes this file
             }),
 
@@ -170,7 +170,7 @@ function createMainConfig(isDev) {
 
         plugins: [
 
-            new CleanPlugin({
+            new CleanWebpackPlugin({
                 cleanOnceBeforeBuildPatterns: ["main-process.*.js"]
             }),
 
