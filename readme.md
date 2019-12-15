@@ -1,8 +1,10 @@
-# Electron + React + Typescript boilerplate project
+# Electron + React + Fs + Typescript boilerplate project
 ![](./src/resources/project-logo-400.jpg) 
 
 
 #### Template project for desktop apps using [Electron](https://electronjs.org/), [React](https://reactjs.org/) and [Typescript](https://www.typescriptlang.org/).
+
+This project enable access to the **file system** through **Node's fs** library.
 
 ---
 <br>
