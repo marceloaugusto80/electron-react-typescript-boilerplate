@@ -70,7 +70,7 @@ export default class FooView extends React.Component<RouteComponentProps, State>
                 </p>
 
                 <button onClick={this.onOpenFileClick}>Open file...</button>
-                <input type="file" ref={this.fileRef} onChange={this.onFileInputChange} style={{ visibility: "collapse" }} />
+                <input type="file" ref={this.fileRef} onChange={this.onFileInputChange} style={{ display: "none" }} />
                 <button onClick={this.onGotoBarClick}>Go to Bar</button>
             </div>
         );
