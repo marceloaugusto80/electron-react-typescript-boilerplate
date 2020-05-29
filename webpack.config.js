@@ -26,7 +26,7 @@ function createRenderConfig(isDev) {
 
         mode: isDev ? DEVELOPMENT : PRODUCTION,
 
-        devtool: isDev ? "inline-source-map" : "none",
+        devtool: isDev ? "source-map" : "none",
 
         entry: {
             "polyfill": "@babel/polyfill",
@@ -180,7 +180,11 @@ function createMainConfig(isDev) {
             }),
 
             // electron-packager needs the package.json file. the "../" is because context is set to the ./src folder
-            new CopyWebpackPlugin(["../package.json"])
+            new CopyWebpackPlugin({
+                patterns: [
+                    {from: "package.json", to: "./", context:"../"}
+                ]
+            })
         ]
     };
 }

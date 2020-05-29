@@ -29,7 +29,7 @@ export default class FooView extends React.Component<RouteComponentProps, State>
         }
     }
 
-    onFileInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    onFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let paths = e.currentTarget.files;
 
         if (!paths || paths.length < 1) {
@@ -39,22 +39,26 @@ export default class FooView extends React.Component<RouteComponentProps, State>
 
         let filePath = paths[0].path;
 
-        try {
-            let fileContent = await this.loadFileContent(filePath);
-            this.setState({ text: fileContent });
-        } catch (error) {
-            this.setState({ text: error.message });
-        }
+        this.loadFileContent(filePath)
+            .then((fileContent) => {
+                this.setState({ text: fileContent });
+            })
+            .catch(err => {
+                this.setState({ text: err.message });
+            });
     }
 
     loadFileContent = (filePath: string): Promise<string> => {
         return new Promise<string>((res, rej) => {
             fs.readFile(filePath, { encoding: "utf8" }, (err, data) => {
                 if (err) {
-                    rej(err);
+                    console.log(err);
+                    res(err.message);
                 }
                 else {
-                    res(data.toString());
+                    var dataStr = data.toString();
+                    console.log(dataStr);
+                    res(dataStr);
                 }
             });
         });
