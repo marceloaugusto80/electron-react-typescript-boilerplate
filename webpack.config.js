@@ -5,6 +5,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const DefinePlugin = require("webpack").DefinePlugin;
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const webpack = require("webpack");
 
 
 
@@ -74,8 +75,7 @@ function createRenderConfig(isDev) {
                                 "@babel/preset-env"
                             ],
                             plugins: [
-                                "@babel/plugin-proposal-class-properties",
-                                "react-hot-loader/babel"
+                                "@babel/plugin-proposal-class-properties"
                             ]
                         }
                     }
@@ -121,11 +121,14 @@ function createRenderConfig(isDev) {
                 ]
             }),
 
+            new webpack.HotModuleReplacementPlugin(),
+
         ],
 
         devServer: isDev ? {
             contentBase: path.join(__dirname, "dist"),
             compress: true,
+            hot: true,
             port: 9000
         } : undefined
     };

@@ -1,4 +1,3 @@
-import { hot } from "react-hot-loader/root";
 import * as React from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import FooView from "./views/FooView";
@@ -6,7 +5,7 @@ import BarView from "./views/BarView";
 import { Layout } from "./views/Layout";
 import "./styles/main.scss";
 
-function App() {
+export default function App() {
     return (
         <BrowserRouter>
             <Layout>
@@ -19,5 +18,3 @@ function App() {
         </BrowserRouter>
     );
 }
-
-export default hot(App);
