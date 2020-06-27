@@ -23,6 +23,9 @@ export default class BarView extends React.Component<RouteComponentProps, BarVie
             this.setState({ timeText: time });
         });
 
+    }
+    
+    componentDidMount() {
         this._clock.Run();
     }
 
