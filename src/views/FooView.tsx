@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-import * as fs from "fs";
+import fs from "fs";
 
 interface State {
     text: string;
@@ -39,29 +39,19 @@ export default class FooView extends React.Component<RouteComponentProps, State>
 
         let filePath = paths[0].path;
 
-        this.loadFileContent(filePath)
-            .then((fileContent) => {
-                this.setState({ text: fileContent });
-            })
-            .catch(err => {
-                this.setState({ text: err.message });
-            });
+        this.loadFileContentAsync(filePath)
+            .then(fileContent => this.setState({ text: fileContent }))
+            .catch(err => this.setState({ text: err.message }));
     }
 
-    loadFileContent = (filePath: string): Promise<string> => {
-        return new Promise<string>((res, rej) => {
-            fs.readFile(filePath, { encoding: "utf8" }, (err, data) => {
-                if (err) {
-                    console.log(err);
-                    res(err.message);
-                }
-                else {
-                    var dataStr = data.toString();
-                    console.log(dataStr);
-                    res(dataStr);
-                }
-            });
-        });
+    loadFileContentAsync = async (filePath: string): Promise<string> => {
+        try {
+            let content = await fs.promises.readFile(filePath, { encoding: "utf-8"});
+            return content;
+            
+        } catch (error) {
+            throw error;            
+        }
     }
 
 

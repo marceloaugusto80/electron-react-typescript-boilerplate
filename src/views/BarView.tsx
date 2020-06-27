@@ -26,7 +26,11 @@ export default class BarView extends React.Component<RouteComponentProps, BarVie
     }
     
     componentDidMount() {
-        this._clock.Run();
+        this._clock.run();
+    }
+
+    componentWillUnmount() {
+        this._clock.stop();
     }
 
     onGotoFooClick = (event: React.MouseEvent<HTMLButtonElement>) => {
