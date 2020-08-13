@@ -121,8 +121,6 @@ function createRenderConfig(isDev) {
                 ]
             }),
 
-            new webpack.HotModuleReplacementPlugin(),
-
         ],
 
         devServer: isDev ? {
