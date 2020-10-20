@@ -24,7 +24,7 @@
     "build-prod": "npx webpack --env.NODE_ENV=production --env.target=render && npx webpack --env.NODE_ENV=production --env.target=main",
     "server": "npx webpack-dev-server --env.NODE_ENV=development --env.target=render --hot",
     "start": "npx webpack --env.NODE_ENV=development --env.target=main && npx electron ./dist/.",
-    "pack": "npm run build-prod && npx electron-packager ./dist --out ./pack --overwrite"
+    "pack": "npx rimraf ./pack && npm run build-prod && npx electron-packager ./dist --out ./pack --overwrite"
   },
   "dependencies": {
     "react": "^16.14.0",
@@ -53,6 +53,7 @@
     "html-webpack-plugin": "^4.5.0",
     "mini-css-extract-plugin": "^1.1.1",
     "node-sass": "^4.14.1",
+    "rimraf": "^3.0.2",
     "sass-loader": "^10.0.3",
     "typescript": "^4.0.3",
     "webpack": "^5.1.3",
