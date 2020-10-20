@@ -27,7 +27,7 @@ function createRenderConfig(isDev) {
 
         mode: isDev ? DEVELOPMENT : PRODUCTION,
 
-        devtool: isDev ? "source-map" : "none",
+        devtool: isDev ? "source-map" : undefined,
 
         entry: {
             "polyfill": "@babel/polyfill",
