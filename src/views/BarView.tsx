@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Clock from "./../core/Clock";
 import { RouteComponentProps } from 'react-router';
-import "../resources/images/clock-64x64.png";
 
 export interface BarViewState {
     timeText: string;
