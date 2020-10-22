@@ -60,7 +60,7 @@ function createRenderConfig(isDev) {
 
                 {
                     // transforms font files in base64 data. That's the only way I could import fonts in .scss files.
-                    test: /\.(woff|woff2|eot|ttf|svg)$/,
+                    test: /\.(jpg|jpeg|png|gif|woff|woff2|eot|ttf|svg)$/,
                     use: [{ loader: 'url-loader?limit=100000'}]
                 },
                 
@@ -95,10 +95,6 @@ function createRenderConfig(isDev) {
                 filename: "index.html",
                 template: "index.html",
                 cache: true,
-            }),
-
-            new copyWebpackPlugin({
-                patterns: [{ from: "resources", to: "resources" }]
             }),
 
             new HtmlExternalsPlugin({
