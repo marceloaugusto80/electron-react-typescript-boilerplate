@@ -1,3 +1,9 @@
+@import "~fontsource-roboto/index.css"; // font installed via npm
+
+$color1:  #0077b5;
+$color2:  #000000;
+$color3:  #eeeeee;
+
 html {
     height: 100%;
 }
@@ -8,10 +14,9 @@ body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-
-$color1:  #0077b5;
-$color2:  #000000;
-$color3:  #eeeeee;
+h1 {
+    font-family: "Roboto";
+}
 
 button {
     background-color: $color1;

@@ -2,10 +2,10 @@ const path = require("path");
 const HtmlPlugin = require("html-webpack-plugin");
 const HtmlExternalsPlugin = require("html-webpack-externals-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const DefinePlugin = require("webpack").DefinePlugin;
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const webpack = require("webpack");
+const copyWebpackPlugin = require("copy-webpack-plugin");
 
 
 
@@ -22,7 +22,7 @@ function createRenderConfig(isDev) {
         target: "electron-renderer",
 
         resolve: {
-            extensions: [".js", ".jsx", ".ts", ".tsx", ".json"]
+            extensions: [".js", ".jsx", ".ts", ".tsx", ".json", ".css", ".scss"]
         },
 
         mode: isDev ? DEVELOPMENT : PRODUCTION,
@@ -52,17 +52,18 @@ function createRenderConfig(isDev) {
                 {
                     test: /\.scss$/,
                     use: [
-                        {
-                            loader: MiniCssExtractPlugin.loader,
-                            options: {
-                                hmr: isDev
-                            }
-                        },
+                        "style-loader",
                         "css-loader",
                         "sass-loader"
                     ]
                 },
 
+                {
+                    // transforms font files in base64 data. That's the only way I could import fonts in .scss files.
+                    test: /\.(jpg|jpeg|png|gif|woff|woff2|eot|ttf|svg)$/,
+                    use: [{ loader: 'url-loader?limit=100000'}]
+                },
+                
                 {
                     test: /\.(js|jsx|ts|tsx)$/,
                     exclude: /node_modules/,
@@ -87,11 +88,7 @@ function createRenderConfig(isDev) {
         plugins: [
 
             new CleanWebpackPlugin({
-                cleanOnceBeforeBuildPatterns: ["!main-process.*.js"] // config for electron-main deletes this file
-            }),
-
-            new MiniCssExtractPlugin({
-                filename: "main.css"
+                cleanOnceBeforeBuildPatterns: [ "**/*", "!main-process.*.js"] // config for electron-main deletes this file
             }),
 
             new HtmlPlugin({
