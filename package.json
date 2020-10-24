@@ -28,10 +28,8 @@
   },
   "dependencies": {
     "fontsource-roboto": "^3.0.3",
-    "i18next": "^19.8.2",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
-    "react-i18next": "^11.7.3",
     "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
