@@ -77,7 +77,7 @@ function createRenderConfig(isDev) {
                             ],
                             plugins: [
                                 "@babel/plugin-proposal-class-properties",
-                                ["@babel/plugin-transform-runtime", { useESModules: true }]
+                                "@babel/plugin-transform-runtime"
                             ]
                         }
                     }
