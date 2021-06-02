@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {PureComponent} from 'react';
 import { RouteComponentProps } from 'react-router';
 import fs from "fs";
 
@@ -6,7 +6,7 @@ interface State {
     text: string;
 }
 
-export default class FooView extends React.Component<RouteComponentProps, State> {
+export default class FooView extends PureComponent<RouteComponentProps, State> {
     fileRef: React.RefObject<HTMLInputElement>;
 
     constructor(props: RouteComponentProps) {
@@ -30,6 +30,7 @@ export default class FooView extends React.Component<RouteComponentProps, State>
     }
 
     onFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        
         let paths = e.currentTarget.files;
 
         if (!paths || paths.length < 1) {

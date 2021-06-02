@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {PureComponent} from 'react';
 import Clock from "./../core/Clock";
 import { RouteComponentProps } from 'react-router';
 import clock from "../resources/images/clock-64x64.png";
@@ -9,7 +9,7 @@ export interface BarViewState {
 
 
 
-export default class BarView extends React.Component<RouteComponentProps, BarViewState> {
+export default class BarView extends PureComponent<RouteComponentProps, BarViewState> {
 
     private readonly _clock: Clock;
 

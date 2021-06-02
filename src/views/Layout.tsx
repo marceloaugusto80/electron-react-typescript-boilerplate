@@ -1,12 +1,11 @@
-import * as React from 'react';
+import React, {FunctionComponent, PropsWithChildren} from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import {Colors} from "../GlobalStyle";
 
-export interface ILayoutProps {
-}
 
-export const Layout: React.FunctionComponent<ILayoutProps> = ({ children }) => {
+
+export const Layout: FunctionComponent<PropsWithChildren<any>> = ({ children }) => {
 
     const getTime = () => {
         let now = new Date();
