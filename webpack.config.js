@@ -4,7 +4,6 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const DefinePlugin = require("webpack").DefinePlugin;
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const webpack = require("webpack");
-const copyWebpackPlugin = require("copy-webpack-plugin");
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 
@@ -134,7 +133,6 @@ function createMainConfig(isDev) {
                         options: {
                             presets: [
                                 "@babel/preset-typescript",
-                                "@babel/preset-env",
                             ],
                         }
                     }
