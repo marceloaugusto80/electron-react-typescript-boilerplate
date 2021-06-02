@@ -5,6 +5,7 @@ const DefinePlugin = require("webpack").DefinePlugin;
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const webpack = require("webpack");
 const copyWebpackPlugin = require("copy-webpack-plugin");
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 
 
@@ -14,6 +15,19 @@ const PRODUCTION = "production";
 
 
 function createRenderConfig(isDev) {
+
+    const babelConfig = {
+        presets: [
+            "@babel/preset-typescript",
+            "@babel/preset-react",
+        ],
+        plugins: [
+            "@babel/plugin-proposal-class-properties",
+            "@babel/plugin-transform-runtime",
+            isDev && require.resolve("react-refresh/babel")
+        ].filter(Boolean)
+    };
+
     return {
 
         context: path.join(__dirname, "src"),
@@ -60,16 +74,7 @@ function createRenderConfig(isDev) {
                     exclude: /node_modules/,
                     use: {
                         loader: "babel-loader",
-                        options: {
-                            presets: [
-                                "@babel/preset-typescript",
-                                "@babel/preset-react",
-                            ],
-                            plugins: [
-                                "@babel/plugin-proposal-class-properties",
-                                "@babel/plugin-transform-runtime"
-                            ]
-                        }
+                        options: babelConfig
                     }
                 },
 
@@ -88,7 +93,9 @@ function createRenderConfig(isDev) {
                 cache: true,
             }),
 
-        ],
+            isDev && new webpack.HotModuleReplacementPlugin(),
+            isDev && new ReactRefreshWebpackPlugin(),
+        ].filter(Boolean),
 
         devServer: isDev ? {
             contentBase: path.join(__dirname, "dist"),
