@@ -54,7 +54,6 @@
     "css-loader": "^5.0.0",
     "electron": "^10.1.4",
     "electron-packager": "^15.1.0",
-    "html-webpack-externals-plugin": "^3.8.0",
     "html-webpack-plugin": "^4.5.0",
     "node-sass": "^4.14.1",
     "rimraf": "^3.0.2",

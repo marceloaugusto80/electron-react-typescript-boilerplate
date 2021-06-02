@@ -1,6 +1,5 @@
 const path = require("path");
 const HtmlPlugin = require("html-webpack-plugin");
-const HtmlExternalsPlugin = require("html-webpack-externals-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const DefinePlugin = require("webpack").DefinePlugin;
 const CopyWebpackPlugin = require("copy-webpack-plugin");
@@ -30,20 +29,12 @@ function createRenderConfig(isDev) {
         devtool: isDev ? "source-map" : undefined,
 
         entry: {
-            "polyfill": "@babel/polyfill",
             "render-process": "./render-process.tsx"
         },
 
         output: {
             filename: isDev ? "[name].js" : "[name].[hash].js",
             path: path.join(__dirname, "dist")
-        },
-
-        externals: {
-            "react": "React",
-            "react-dom": "ReactDOM",
-            "react-router-dom": "ReactRouterDOM",
-            "fs": "require('fs')" // we must add node native functions as externals to be able to use them. see ./src/views/FooView.tsx.
         },
 
         module: {
@@ -73,7 +64,6 @@ function createRenderConfig(isDev) {
                             presets: [
                                 "@babel/preset-typescript",
                                 "@babel/preset-react",
-                                "@babel/preset-env"
                             ],
                             plugins: [
                                 "@babel/plugin-proposal-class-properties",
@@ -96,27 +86,6 @@ function createRenderConfig(isDev) {
                 filename: "index.html",
                 template: "index.html",
                 cache: true,
-            }),
-
-            new HtmlExternalsPlugin({
-                cwpOptions: { context: path.join(__dirname, "node_modules") },
-                externals: [
-                    {
-                        module: "react",
-                        global: "React",
-                        entry: isDev ? "umd/react.development.js" : "umd/react.production.min.js"
-                    },
-                    {
-                        module: "react-dom",
-                        global: "ReactDOM",
-                        entry: isDev ? "umd/react-dom.development.js" : "umd/react-dom.production.min.js"
-                    },
-                    {
-                        module: "react-router-dom",
-                        global: "ReactRouterDOM",
-                        entry: isDev ? "umd/react-router-dom.js" : "umd/react-router-dom.min.js"
-                    },
-                ]
             }),
 
         ],
