@@ -162,7 +162,7 @@ function createMainConfig(isDev) {
 module.exports = function (env) {
 
     // env variable is passed by webpack through the cli. see package.json scripts.
-    const isDev = env.NODE_ENV == DEVELOPMENT;
+    const isDev = !!env.development;
     const target = env.target;
 
     const configFactory = target == "main" ? createMainConfig : createRenderConfig;
