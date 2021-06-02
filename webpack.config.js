@@ -46,7 +46,7 @@ function createRenderConfig(isDev) {
         },
 
         output: {
-            filename: isDev ? "[name].js" : "[name].[hash].js",
+            filename: "[name].js",
             path: path.join(__dirname, "dist")
         },
 
