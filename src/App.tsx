@@ -3,11 +3,12 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import FooView from "./views/FooView";
 import BarView from "./views/BarView";
 import { Layout } from "./views/Layout";
-import "./styles/main.scss";
+import { GlobalStyle } from "./GlobalStyle";
 
 export default function App() {
     return (
         <BrowserRouter>
+            <GlobalStyle/>
             <Layout>
                 <Switch>
                     <Route path="/bar" component={BarView} />
