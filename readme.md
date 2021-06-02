@@ -9,7 +9,7 @@
 <br>
 <br>
 
-# Before everything
+# Before anything
 As always, install packages:
 ```
 npm install
