@@ -29,7 +29,7 @@ Run:
 ```
 npm test
 ```
-This templated uses [Jest](https://jestjs.io/) (with[Ts-Jest](https://www.npmjs.com/package/ts-jest)) as testing framework.
+This templated uses [Jest](https://jestjs.io/) (along with [Ts-Jest](https://www.npmjs.com/package/ts-jest)) as testing framework.
 
 # Deploy
 Just run:
