@@ -24,7 +24,7 @@
     "build-prod": "npx webpack --env production --env target=render && npx webpack --env production --env target=main",
     "start:server": "npx webpack serve --env development --env target=render --hot",
     "start:electron": "npx webpack --env development --env target=main && npx electron ./dist/.",
-    "start": "npx concurrently 'npm run start:server' 'npm run start:electron' --kill-others --kill-others-on-fail",
+    "start": "npx concurrently npm:start:* --kill-others --kill-others-on-fail",
     "pack": "npx rimraf ./pack && npm run build-prod && npx electron-packager ./dist --out ./pack --overwrite",
     "test": "jest"
   },
