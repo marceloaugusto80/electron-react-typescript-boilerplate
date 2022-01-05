@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import {Colors} from "../GlobalStyle";
 
-
-
 export const Layout: FunctionComponent<PropsWithChildren<any>> = ({ children }) => {
 
     const getTime = () => {

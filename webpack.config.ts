@@ -1,24 +1,20 @@
-const path = require("path");
-const HtmlPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const DefinePlugin = require("webpack").DefinePlugin;
-const CopyWebpackPlugin = require("copy-webpack-plugin");
-const webpack = require("webpack");
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
-
-
+import path from "path";
+import HtmlPlugin from "html-webpack-plugin";
+import { CleanWebpackPlugin } from "clean-webpack-plugin";
+import { DefinePlugin, Configuration, WebpackPluginInstance, HotModuleReplacementPlugin } from "webpack";
+import CopyWebpackPlugin from "copy-webpack-plugin";
+const ReactRefreshWebapackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
 // const to avoid typos 
 const DEVELOPMENT = "development";
 const PRODUCTION = "production";
 
-
-function createRenderConfig(isDev) {
+function createRenderConfig(isDev: boolean) : Configuration {
 
     const babelConfig = {
         presets: [
-            "@babel/preset-typescript",
             "@babel/preset-react",
+            "@babel/preset-typescript",
         ],
         plugins: [
             "@babel/plugin-proposal-class-properties",
@@ -35,6 +31,10 @@ function createRenderConfig(isDev) {
 
         resolve: {
             extensions: [".js", ".jsx", ".ts", ".tsx", ".json", ".css", ".scss"]
+        },
+
+        node: {
+            global: true
         },
 
         mode: isDev ? DEVELOPMENT : PRODUCTION,
@@ -64,9 +64,9 @@ function createRenderConfig(isDev) {
                 {
                     // transforms font files in base64 data. That's the only way I could import fonts in .scss files.
                     test: /\.(jpg|jpeg|png|gif|woff|woff2|eot|ttf|svg)$/,
-                    use: [{ loader: 'url-loader?limit=100000'}]
+                    use: [{ loader: 'url-loader?limit=100000' }]
                 },
-                
+
                 {
                     test: /\.(js|jsx|ts|tsx)$/,
                     exclude: /node_modules/,
@@ -82,7 +82,7 @@ function createRenderConfig(isDev) {
         plugins: [
 
             new CleanWebpackPlugin({
-                cleanOnceBeforeBuildPatterns: [ "**/*", "!main-process.*.js"] // config for electron-main deletes this file
+                cleanOnceBeforeBuildPatterns: ["**/*", "!main-process.*.js"] // config for electron-main deletes this file
             }),
 
             new HtmlPlugin({
@@ -90,22 +90,26 @@ function createRenderConfig(isDev) {
                 template: "index.html",
                 cache: true,
             }),
-
-            isDev && new webpack.HotModuleReplacementPlugin(),
-            isDev && new ReactRefreshWebpackPlugin(),
+            
+            (isDev && new ReactRefreshWebapackPlugin()) as WebpackPluginInstance,
+        
         ].filter(Boolean),
 
-        devServer: isDev ? {
-            contentBase: path.join(__dirname, "dist"),
+        devServer: {
             compress: true,
             hot: true,
-            port: 9000
-        } : undefined
+            port: 9000,
+            historyApiFallback: true,
+            devMiddleware: {
+                writeToDisk: true
+            }
+
+        }
     };
 }
 
 
-function createMainConfig(isDev) {
+function createMainConfig(isDev: boolean) {
     return {
 
         context: path.join(__dirname, "src"),
@@ -154,7 +158,7 @@ function createMainConfig(isDev) {
             // electron-packager needs the package.json file. the "../" is because context is set to the ./src folder
             new CopyWebpackPlugin({
                 patterns: [
-                    {from: "package.json", to: "./", context:"../"}
+                    { from: "package.json", to: "./", context: "../" }
                 ]
             })
         ]
@@ -163,7 +167,7 @@ function createMainConfig(isDev) {
 
 
 
-module.exports = function (env) {
+module.exports = function (env: any) {
 
     // env variable is passed by webpack through the cli. see package.json scripts.
     const isDev = !!env.development;

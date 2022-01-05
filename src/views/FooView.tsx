@@ -1,51 +1,40 @@
-import React, {PureComponent} from 'react';
-import { RouteComponentProps } from 'react-router';
+import React, {PureComponent, useRef, useState} from 'react';
 import fs from "fs";
+import { useNavigate } from 'react-router-dom';
 
-interface State {
-    text: string;
-}
+export function FooView() {
 
-export default class FooView extends PureComponent<RouteComponentProps, State> {
-    fileRef: React.RefObject<HTMLInputElement>;
+    const fileRef = useRef<HTMLInputElement>(null);
+    const navigate = useNavigate();
+    const [text, setText] = useState("Open a file to display content here");
 
-    constructor(props: RouteComponentProps) {
-        super(props);
-        this.state = {
-            text: "Open a file to display content here"
-        };
-
-        this.fileRef = React.createRef<HTMLInputElement>();
-    }
-
-    onGotoBarClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const onGotoBarClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         console.log("Navigating to Bar view");
-        this.props.history.push("/bar");
+        navigate("/bar");
     };
 
-    onOpenFileClick = () => {
-        if (this.fileRef.current) {
-            this.fileRef.current.click();
+    const onOpenFileClick = () => {
+        if (fileRef.current) {
+            fileRef.current.click();
         }
     }
 
-    onFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const onFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         
         let paths = e.currentTarget.files;
 
         if (!paths || paths.length < 1) {
-            this.setState({ text: "Could not load files..." });
-            return;
+            return setText("Could not load files...");
         }
 
         let filePath = paths[0].path;
 
-        this.loadFileContentAsync(filePath)
-            .then(fileContent => this.setState({ text: fileContent }))
-            .catch(err => this.setState({ text: err.message }));
+        loadFileContentAsync(filePath)
+            .then(fileContent => setText(fileContent))
+            .catch(err => setText(err.message));
     }
 
-    loadFileContentAsync = async (filePath: string): Promise<string> => {
+    const loadFileContentAsync = async (filePath: string): Promise<string> => {
         try {
             let content = await fs.promises.readFile(filePath, { encoding: "utf-8"});
             return content;
@@ -55,19 +44,17 @@ export default class FooView extends PureComponent<RouteComponentProps, State> {
         }
     }
 
+    return (
+        <div>
+            <h3>FOO View</h3>
+            <p>
+                {text}
+            </p>
 
-    public render() {
-        return (
-            <div>
-                <h3>FOO View</h3>
-                <p>
-                    {this.state.text}
-                </p>
+            <button onClick={onOpenFileClick}>Open file...</button>
+            <input type="file" ref={fileRef} onChange={onFileInputChange} style={{ display: "none" }} />
+            <button onClick={onGotoBarClick}>Go to Bar</button>
+        </div>
+    );
 
-                <button onClick={this.onOpenFileClick}>Open file...</button>
-                <input type="file" ref={this.fileRef} onChange={this.onFileInputChange} style={{ display: "none" }} />
-                <button onClick={this.onGotoBarClick}>Go to Bar</button>
-            </div>
-        );
-    }
 }
