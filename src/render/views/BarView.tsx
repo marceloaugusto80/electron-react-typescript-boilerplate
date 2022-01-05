@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Clock from "./../core/Clock";
+import Clock from "../core/Clock";
 import { useNavigate } from 'react-router-dom';
 import clock from "../resources/images/clock-64x64.png";
 
@@ -12,6 +12,9 @@ export function BarView() {
     useEffect(() => {
         clockRef.current = new Clock((time: string) => setTimeStr(time));
         clockRef.current.run();
+        return () => {
+            if(clockRef.current) clockRef.current.stop();
+        }
     }, []);
 
     const onGotoFooClick = (event: React.MouseEvent<HTMLButtonElement>) => {

@@ -5,11 +5,29 @@ import { DefinePlugin, Configuration, WebpackPluginInstance, HotModuleReplacemen
 import CopyWebpackPlugin from "copy-webpack-plugin";
 const ReactRefreshWebapackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
-// const to avoid typos 
-const DEVELOPMENT = "development";
-const PRODUCTION = "production";
 
-function createRenderConfig(isDev: boolean) : Configuration {
+class Flag {
+    readonly development: boolean;
+    readonly hotReload: boolean;
+    readonly target: "render" | "main";
+
+    constructor(env: any) {
+        // env variable is passed by webpack through the cli. see package.json scripts.
+        this.development = !env["production"];
+        this.hotReload = !!env["hot-reload"] && this.development;
+        this.target = env["target"];
+    }
+
+    print() {
+        console.log("## Compilation flags:")
+        Object.keys(this).forEach(k => {
+            console.log(`## ${k}: ${this[k as keyof Flag]}`);
+        });
+        console.log("##");
+    }
+}
+
+function createRenderConfig(flag: Flag) : Configuration {
 
     const babelConfig = {
         presets: [
@@ -19,13 +37,13 @@ function createRenderConfig(isDev: boolean) : Configuration {
         plugins: [
             "@babel/plugin-proposal-class-properties",
             "@babel/plugin-transform-runtime",
-            isDev && require.resolve("react-refresh/babel")
+            flag.hotReload && require.resolve("react-refresh/babel")
         ].filter(Boolean)
     };
 
     return {
 
-        context: path.join(__dirname, "src"),
+        context: path.join(__dirname, "src/render"),
 
         target: "electron-renderer",
 
@@ -37,9 +55,9 @@ function createRenderConfig(isDev: boolean) : Configuration {
             global: true
         },
 
-        mode: isDev ? DEVELOPMENT : PRODUCTION,
+        mode: flag.development ? "development" : "production",
 
-        devtool: isDev ? "source-map" : undefined,
+        devtool: flag.development ? "source-map" : undefined,
 
         entry: {
             "render-process": "./render-process.tsx"
@@ -47,7 +65,7 @@ function createRenderConfig(isDev: boolean) : Configuration {
 
         output: {
             filename: "[name].js",
-            path: path.join(__dirname, "dist")
+            path: path.join(__dirname, "dist", "render")
         },
 
         module: {
@@ -82,22 +100,20 @@ function createRenderConfig(isDev: boolean) : Configuration {
         plugins: [
 
             new CleanWebpackPlugin({
-                cleanOnceBeforeBuildPatterns: ["**/*", "!main-process.*.js"] // config for electron-main deletes this file
+                cleanOnceBeforeBuildPatterns: ["render/**/*.*"] // config for electron-main deletes this file
             }),
 
             new HtmlPlugin({
-                filename: "index.html",
                 template: "index.html",
-                cache: true,
             }),
             
-            (isDev && new ReactRefreshWebapackPlugin()) as WebpackPluginInstance,
+            (flag.hotReload && new ReactRefreshWebapackPlugin()) as WebpackPluginInstance,
         
         ].filter(Boolean),
 
         devServer: {
             compress: true,
-            hot: true,
+            hot: flag.hotReload,
             port: 9000,
             historyApiFallback: true,
             devMiddleware: {
@@ -108,15 +124,14 @@ function createRenderConfig(isDev: boolean) : Configuration {
     };
 }
 
-
-function createMainConfig(isDev: boolean) {
+function createMainConfig(flag: Flag): Configuration {
     return {
 
-        context: path.join(__dirname, "src"),
+        context: path.join(__dirname, "src/main"),
 
         target: "electron-main",
 
-        mode: isDev ? DEVELOPMENT : PRODUCTION,
+        mode: flag.development ? "development" : "production",
 
         entry: {
             "main-process": "./main-process.ts"
@@ -147,41 +162,22 @@ function createMainConfig(isDev: boolean) {
         plugins: [
 
             new CleanWebpackPlugin({
-                cleanOnceBeforeBuildPatterns: ["main-process.*.js"]
+                cleanOnceBeforeBuildPatterns: ["main-process.js"]
             }),
 
             // inject this becaus the main process uses different logic for prod and dev.
             new DefinePlugin({
-                "ENVIRONMENT": JSON.stringify(isDev ? DEVELOPMENT : PRODUCTION) // this variable name must match the one declared in the main process file.
+                "ENVIRONMENT": JSON.stringify(flag.development ? "development" : "production") // this variable name must match the one declared in the main process file.
             }),
 
-            // electron-packager needs the package.json file. the "../" is because context is set to the ./src folder
-            new CopyWebpackPlugin({
-                patterns: [
-                    { from: "package.json", to: "./", context: "../" }
-                ]
-            })
         ]
     };
 }
 
 
 
-module.exports = function (env: any) {
-
-    // env variable is passed by webpack through the cli. see package.json scripts.
-    const isDev = !!env.development;
-    const target = env.target;
-
-    const configFactory = target == "main" ? createMainConfig : createRenderConfig;
-    const config = configFactory(isDev);
-
-    console.log(
-        "\n##\n## BUILDING BUNDLE FOR: " + (target == "main" ? "main process" : "render process") +
-        "\n## CONFIGURATION: " + (isDev ? DEVELOPMENT : PRODUCTION) +
-        "\n##\n"
-    );
-
-    return config;
-
+export default function(env: any) {
+    const flag = new Flag(env);
+    flag.print();
+    return flag.target == "main" ? createMainConfig(flag) : createRenderConfig(flag);
 };

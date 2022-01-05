@@ -13,7 +13,6 @@ export default function App() {
                 <Routes>
                     <Route path="/bar" element={<BarView />} />
                     <Route path="/" element={<FooView />} />
-                    <Navigate to="/" />
                 </Routes>
             </Layout>
         </BrowserRouter>

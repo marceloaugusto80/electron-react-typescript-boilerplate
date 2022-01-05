@@ -1,5 +1,4 @@
 import {createGlobalStyle} from "styled-components";
-import "fontsource-roboto";
 
 export const Colors = {
     color1:  "#0077b5",
@@ -13,14 +12,9 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     body {
-        font-family: "Roboto";
         padding: 0px 16px;
         min-height: 100%;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
-    }
-
-    h1 {
-        font-family: "Roboto";
     }
 
     button {
