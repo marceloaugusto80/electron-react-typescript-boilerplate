@@ -1,21 +1,22 @@
-type TimerCallback = (arg0: string) => void;
+type TimerCallback = (n: number) => void;
 
-export default class Clock {
+export default class ExampleCoreLogic {
 
     private readonly _onTickCallback: TimerCallback;
     private intervalRef: NodeJS.Timeout | null;
+    n: number;
 
     constructor(onTickCallback: TimerCallback) {
         this._onTickCallback = onTickCallback;
         this.intervalRef = null;
+        this.n = 0;
         
     }
 
     run(): void {
         if(!this.intervalRef) {
             this.intervalRef = setInterval(() => {
-                let now = new Date();
-                this._onTickCallback(`${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`);
+                this._onTickCallback(++this.n);
             }, 1000);
         }
        

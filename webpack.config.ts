@@ -22,7 +22,8 @@ function baseConfiguration(env: Env): Configuration {
         ]
 
     };
-}
+
+} // end base configuration
 
 function mainConfiguration(env: Env): Configuration {
     
@@ -67,7 +68,7 @@ function mainConfiguration(env: Env): Configuration {
         },
 
     };
-}
+} // end main configuration
 
 function RendererConfiguration(env: Env): Configuration {
     
@@ -104,7 +105,7 @@ function RendererConfiguration(env: Env): Configuration {
         },
         
         output: {
-            filename: "[name].js",
+            filename: "scripts/[name].js",
             path: path.join(__dirname, "dist", "renderer"),
             clean: true,
             globalObject: env.hotReload ? "self" : undefined, // Hot Module Replacement needs this to work. See: // https://stackoverflow.com/questions/51000346/uncaught-typeerror-cannot-read-property-webpackhotupdate-of-undefined
@@ -112,13 +113,6 @@ function RendererConfiguration(env: Env): Configuration {
         
         module: {
             rules: [
-                
-                {
-                    // transforms font files in base64 data. That's the only way I could import fonts in .scss files.
-                    test: /\.(jpg|jpeg|png|gif|woff|woff2|eot|ttf|svg)$/,
-                    use: [{ loader: 'url-loader?limit=100000' }]
-                },
-                
                 {
                     test: /\.(js|jsx|ts|tsx)$/,
                     exclude: /node_modules/,
@@ -127,7 +121,27 @@ function RendererConfiguration(env: Env): Configuration {
                         options: babelConfig
                     }
                 },
-                
+                {
+                    test: /\.(png|jpe?g|gif|svg)$/,
+                    use: {
+                        loader: "file-loader",
+                        options: {
+                            outputPath: "images",
+                            name: "[name].[ext]"
+                        }
+                    }
+                },
+                {
+                    test: /\.(ttf|otf|woff2?)$/,
+                    use: {
+                        loader: "file-loader",
+                        options: {
+                            outputPath: "fonts",
+                            name: "[name].[ext]"
+                        }
+                    }
+                },
+            
             ]
         },
         
@@ -149,10 +163,10 @@ function RendererConfiguration(env: Env): Configuration {
             devMiddleware: {
                 writeToDisk: true
             }
-            
         }
     };
-}
+
+} // end renderer configuration
 
 export default function(e: any) {
 
