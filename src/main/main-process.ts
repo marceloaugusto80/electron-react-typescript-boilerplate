@@ -1,11 +1,12 @@
 import { app, BrowserWindow } from "electron";
+import path from "path";
 
 declare const ENVIRONMENT: String;
 
-const IS_DEV = ENVIRONMENT == "development";
-const DEV_SERVER_URL = "http://localhost:9000";
-const HTML_FILE_PATH = "index.html";
-
+const IS_DEV              = (ENVIRONMENT == "development");
+const DEV_SERVER_URL      = "http://localhost:9000";
+const HTML_FILE_PATH      = "./render/index.html";
+const PRELOAD_SCRIPT_PATH = path.resolve(__dirname, "preload.js");
 
 let win: BrowserWindow | null = null;
 
@@ -16,10 +17,11 @@ function createWindow() {
         height: 600,
         webPreferences: {
             nodeIntegration: true,
-            contextIsolation: false
+            preload: PRELOAD_SCRIPT_PATH,
+            contextIsolation: true,
         }
     });
-
+    win.maximize();
     if (IS_DEV) {
         win.loadURL(DEV_SERVER_URL);
         win.webContents.openDevTools();
@@ -27,7 +29,6 @@ function createWindow() {
     else {
         win.loadFile(HTML_FILE_PATH);
     }
-
 
     win.on("closed", () => {
         win = null

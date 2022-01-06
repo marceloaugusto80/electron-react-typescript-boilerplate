@@ -1,7 +1,7 @@
 import React, { useRef, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export function FooView() {
+export function ExampleView2() {
 
     const fileRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();

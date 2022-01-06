@@ -3,7 +3,7 @@ import Clock from "../core/Clock";
 import { useNavigate } from 'react-router-dom';
 import clock from "../resources/images/clock-64x64.png";
 
-export function BarView() {
+export function ExampleView1() {
 
     const clockRef = useRef<Clock>();
     const [timeStr, setTimeStr] = useState("");
