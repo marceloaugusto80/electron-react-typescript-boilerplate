@@ -1,11 +1,13 @@
-import { contextBridge, ipcMain, ipcRenderer } from "electron";
 import { SharedContext } from "@/shared/SharedContext";
+import { contextBridge, ipcRenderer } from "electron";
 
 const sharedContext: SharedContext = {
-    getSomeData: () => {
-        return {someNumber: 49, someString: "hello"}
-    },
-    setSomeData: (someData) => console.log(someData)
+    readFileAsync: async (path: string) => {
+        const response = await ipcRenderer.invoke("file-msg", path);
+        if (typeof response == "string") return response;
+        throw Error("Could not get file content.");
+    }
 }
 
 contextBridge.exposeInMainWorld("sharedContext", sharedContext);
+contextBridge.exposeInMainWorld("require", require);
