@@ -10,4 +10,3 @@ const sharedContext: SharedContext = {
 }
 
 contextBridge.exposeInMainWorld("sharedContext", sharedContext);
-contextBridge.exposeInMainWorld("require", require);

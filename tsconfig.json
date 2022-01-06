@@ -1,8 +1,10 @@
 {
   "compileOnSave": false,
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules/**"],
   "compilerOptions": {
     "target": "es6",
-    "module": "commonjs",
+    "module": "CommonJS",
     "jsx": "react",
     "sourceMap": true,
     "strict": true,

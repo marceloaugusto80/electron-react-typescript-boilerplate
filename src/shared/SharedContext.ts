@@ -4,6 +4,6 @@
  * Defined in ./src/main/preload.ts
  */
 export interface SharedContext {
-    getSomeData(): any;
-    setSomeData(data: any): void;
+    readFileAsync: (path: string) => Promise<string>;
 }
+

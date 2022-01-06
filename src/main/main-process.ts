@@ -1,5 +1,6 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import path from "path";
+import fs from "fs";
 
 declare const ENVIRONMENT: String;
 
@@ -18,13 +19,13 @@ function createWindow() {
         webPreferences: {
             nodeIntegration: true,
             preload: PRELOAD_SCRIPT_PATH,
-            contextIsolation: true,
+            contextIsolation: false
         }
     });
     win.maximize();
+    win.webContents.openDevTools();
     if (IS_DEV) {
         win.loadURL(DEV_SERVER_URL);
-        win.webContents.openDevTools();
     }
     else {
         win.loadFile(HTML_FILE_PATH);
@@ -50,3 +51,13 @@ app.on('activate', () => {
         createWindow()
     }
 })
+
+ipcMain.handle("file-msg", async (ev, arg: string) => {
+    try {
+        const content = await fs.promises.readFile(arg, { encoding: "utf-8" });
+        return content;
+    } catch (error) {
+        // TODO better error handling
+        return null;
+    }
+});

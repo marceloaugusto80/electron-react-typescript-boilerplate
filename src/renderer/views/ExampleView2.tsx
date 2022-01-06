@@ -1,29 +1,27 @@
-import React, { useRef, useState} from 'react';
+import React, { useState} from 'react';
 
 export function ExampleView2() {
 
-    const fileRef = useRef<HTMLInputElement>(null);
     const [text, setText] = useState("Open a file to display content here");
 
-    const onOpenFileClick = () => {
-        if (fileRef.current) {
-            fileRef.current.click();
-        }
-    }
-
-    const onFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        let paths = e.currentTarget.files;
-        if (!paths || paths.length < 1) {
-            return setText("Could not load files...");
+    const onFileInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {files} = e.currentTarget;
+        if(!files || files.length != 1) return;
+        try {
+            const response =  await window.sharedContext.readFileAsync(files[0].path);
+            if (typeof response == "string") setText(response);
+        } catch (error) {
+            setText((error as Error).message);
         }
     }
 
     return (
         <div>
-            <h3>FOO View hurray</h3>
-            <p>
-                {text}
-            </p>
+            <h1>Example view 2</h1>
+            <p>Open a file</p>
+            <input type="file" multiple={false} onChange={onFileInputChange} />
+            <p>File content:</p>
+            <p>{text}</p>
         </div>
     );
 

@@ -44,6 +44,10 @@ function mainConfiguration(env: Env): Configuration {
 
         mode: env.development ? "development" : "production",
 
+        externalsPresets: {
+            electronMain: true
+        },
+
         entry: {
             "preload": "./preload.ts",
             "main-process": "./main-process.ts"
@@ -68,6 +72,9 @@ function mainConfiguration(env: Env): Configuration {
                             presets: [
                                 "@babel/preset-typescript",
                             ],
+                            plugins: [
+                                "@babel/plugin-transform-runtime"
+                            ]
                         }
                     }
                 }
@@ -85,6 +92,7 @@ function RendererConfiguration(env: Env): Configuration {
             "@babel/preset-typescript",
         ],
         plugins: [
+            "@babel/plugin-transform-runtime",
             env.hotReload && require.resolve("react-refresh/babel")
         ].filter(Boolean)
     };
@@ -95,10 +103,14 @@ function RendererConfiguration(env: Env): Configuration {
 
         context: path.join(__dirname, "src/renderer"),
 
-        target: env.hotReload ? "web" : "electron-renderer",
+        target: "electron-renderer",
 
         resolve: {
             extensions: [".js", ".jsx", ".ts", ".tsx", ".json"]
+        },
+
+        externalsPresets: {
+            electronRenderer: true
         },
 
         mode: env.development ? "development" : "production",
@@ -112,7 +124,6 @@ function RendererConfiguration(env: Env): Configuration {
         output: {
             filename: "scripts/[name].js",
             path: path.join(__dirname, "dist", "renderer"),
-            publicPath: "./",
             clean: true,
             globalObject: env.hotReload ? "self" : undefined, // Hot Module Replacement needs this to work. See: // https://stackoverflow.com/questions/51000346/uncaught-typeerror-cannot-read-property-webpackhotupdate-of-undefined
         },
