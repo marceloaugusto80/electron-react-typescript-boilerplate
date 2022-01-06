@@ -1,5 +1,6 @@
 import path from "path";
 import { Configuration, DefinePlugin, WebpackPluginInstance } from "webpack";
+import "webpack-dev-server";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
 import { TsconfigPathsPlugin } from "tsconfig-paths-webpack-plugin";
@@ -99,7 +100,7 @@ function RendererConfiguration(env: Env): Configuration {
         target: env.hotReload ? "web" : "electron-renderer",
 
         resolve: {
-            extensions: [".js", ".jsx", ".ts", ".tsx", ".json", ".css", ".scss"]
+            extensions: [".js", ".jsx", ".ts", ".tsx", ".json"]
         },
 
         mode: env.development ? "development" : "production",
