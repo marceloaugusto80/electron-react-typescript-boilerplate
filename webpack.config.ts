@@ -85,8 +85,6 @@ function RendererConfiguration(env: Env): Configuration {
             "@babel/preset-typescript",
         ],
         plugins: [
-            "@babel/plugin-proposal-class-properties",
-            "@babel/plugin-transform-runtime",
             env.hotReload && require.resolve("react-refresh/babel")
         ].filter(Boolean)
     };
