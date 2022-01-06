@@ -8,9 +8,11 @@
     "strict": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "typeRoots": [
-      "./node_modules/@types",
-      "./src/types"
-    ]
+    "baseUrl": "./src",
+    "paths": {
+      "@/shared/*" :   ["shared/*"],
+      "@/renderer/*" : ["renderer/*"],
+      "@/main/*" :     ["main/*"]
+    }
   }
 }

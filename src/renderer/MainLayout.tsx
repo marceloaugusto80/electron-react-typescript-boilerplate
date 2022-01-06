@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
-import defaultTheme from './styles/defaultTheme';
-import { GlobalStyle } from "./styles/GlobalStyle";
-import { ExampleView1 } from './views/ExampleView1';
-import { ExampleView2 } from './views/ExampleView2';
-import HomeView from './views/HomeView';
+import defaultTheme from '@/renderer/styles/defaultTheme';
+import { GlobalStyle } from "@/renderer/styles/GlobalStyle";
+import { ExampleView1 } from '@/renderer/views/ExampleView1';
+import { ExampleView2 } from '@/renderer/views/ExampleView2';
+import HomeView from '@/renderer/views/HomeView';
 
 export default function MainLayout() {
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import ExampleCoreLogic from "../core/ExampleCoreLogic";
+import ExampleCoreLogic from "@/renderer/core/ExampleCoreLogic";
 import { useNavigate } from 'react-router-dom';
-import clock from "../resources/images/clock-64x64.png";
+import clock from "@/renderer/resources/images/clock-64x64.png";
 
 export function ExampleView1() {
 

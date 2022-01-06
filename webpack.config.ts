@@ -2,6 +2,8 @@ import path from "path";
 import { Configuration, DefinePlugin, WebpackPluginInstance } from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
+import { TsconfigPathsPlugin } from "tsconfig-paths-webpack-plugin";
+import {merge} from "webpack-merge";
 
 interface Env {
     development: boolean;
@@ -10,6 +12,10 @@ interface Env {
 
 function baseConfiguration(env: Env): Configuration {
     return {
+
+        resolve: {
+            plugins: [new TsconfigPathsPlugin()]
+        },
 
         mode: env.development ? "development" : "production",
 
@@ -26,7 +32,7 @@ function baseConfiguration(env: Env): Configuration {
 } // end base configuration
 
 function mainConfiguration(env: Env): Configuration {
-    
+
     return {
 
         name: "main",
@@ -71,7 +77,7 @@ function mainConfiguration(env: Env): Configuration {
 } // end main configuration
 
 function RendererConfiguration(env: Env): Configuration {
-    
+
     const babelConfig = {
         presets: [
             "@babel/preset-react",
@@ -103,14 +109,14 @@ function RendererConfiguration(env: Env): Configuration {
         entry: {
             "renderer-process": "./renderer-process.tsx"
         },
-        
+
         output: {
             filename: "scripts/[name].js",
             path: path.join(__dirname, "dist", "renderer"),
             clean: true,
             globalObject: env.hotReload ? "self" : undefined, // Hot Module Replacement needs this to work. See: // https://stackoverflow.com/questions/51000346/uncaught-typeerror-cannot-read-property-webpackhotupdate-of-undefined
         },
-        
+
         module: {
             rules: [
                 {
@@ -141,20 +147,20 @@ function RendererConfiguration(env: Env): Configuration {
                         }
                     }
                 },
-            
+
             ]
         },
-        
+
         plugins: [
-        
+
             new HtmlWebpackPlugin({
                 template: "index.html",
             }),
-            
+
             (env.hotReload && new ReactRefreshWebpackPlugin()) as WebpackPluginInstance,
-            
+
         ].filter(Boolean),
-        
+
         devServer: {
             compress: true,
             hot: env.hotReload,
@@ -168,7 +174,7 @@ function RendererConfiguration(env: Env): Configuration {
 
 } // end renderer configuration
 
-export default function(e: any) {
+export default function (e: any) {
 
     const env: Env = {
         development: !e["production"],
@@ -176,8 +182,8 @@ export default function(e: any) {
     };
 
     const baseConfig = baseConfiguration(env);
-    const mainConfig = {...baseConfig, ...mainConfiguration(env)};
-    const rendererConfig = {...baseConfig, ...RendererConfiguration(env)};
-    
+    const mainConfig = merge(baseConfig, mainConfiguration(env));
+    const rendererConfig = merge(baseConfig, RendererConfiguration(env));
+
     return [mainConfig, rendererConfig];
 }

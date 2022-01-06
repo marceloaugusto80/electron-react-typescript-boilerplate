@@ -1,5 +1,5 @@
 import { contextBridge, ipcMain, ipcRenderer } from "electron";
-import { SharedContext } from "../shared/SharedContext";
+import { SharedContext } from "@/shared/SharedContext";
 
 const sharedContext: SharedContext = {
     getSomeData: () => {
