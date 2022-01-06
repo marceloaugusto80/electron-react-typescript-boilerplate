@@ -5,7 +5,7 @@ declare const ENVIRONMENT: String;
 
 const IS_DEV              = (ENVIRONMENT == "development");
 const DEV_SERVER_URL      = "http://localhost:9000";
-const HTML_FILE_PATH      = "./render/index.html";
+const HTML_FILE_PATH      = "renderer/index.html";
 const PRELOAD_SCRIPT_PATH = path.resolve(__dirname, "preload.js");
 
 let win: BrowserWindow | null = null;

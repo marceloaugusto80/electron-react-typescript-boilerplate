@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import { HashRouter, Link, Route, Routes } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
 import defaultTheme from '@/renderer/styles/defaultTheme';
 import { GlobalStyle } from "@/renderer/styles/GlobalStyle";
@@ -13,7 +13,7 @@ export default function MainLayout() {
         <Fragment>
             <ThemeProvider theme={defaultTheme}>
                 <GlobalStyle />
-                <BrowserRouter>
+                <HashRouter>
                     <Content>
                         <SidePanel>
                             <Link to="/">Home</Link>
@@ -36,7 +36,7 @@ export default function MainLayout() {
                             The footer
                         </Footer>
                     </Content>
-                </BrowserRouter>
+                </HashRouter>
             </ThemeProvider>
         </Fragment>
     );

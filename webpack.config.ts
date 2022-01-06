@@ -112,6 +112,7 @@ function RendererConfiguration(env: Env): Configuration {
         output: {
             filename: "scripts/[name].js",
             path: path.join(__dirname, "dist", "renderer"),
+            publicPath: "./",
             clean: true,
             globalObject: env.hotReload ? "self" : undefined, // Hot Module Replacement needs this to work. See: // https://stackoverflow.com/questions/51000346/uncaught-typeerror-cannot-read-property-webpackhotupdate-of-undefined
         },

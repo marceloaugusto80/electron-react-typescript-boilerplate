@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/marceloaugusto80/electron-react-typescript-boilerplate/issues"
   },
-  "main": "main-process.js",
+  "main": "dist/main-process.js",
   "scripts": {
     "test": "npx jest",
     "build": "npx webpack",
