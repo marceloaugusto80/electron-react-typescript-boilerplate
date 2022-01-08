@@ -4,6 +4,7 @@ import "webpack-dev-server";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
 import { TsconfigPathsPlugin } from "tsconfig-paths-webpack-plugin";
+import CopyWebpackPlugin from "copy-webpack-plugin";
 import {merge} from "webpack-merge";
 
 interface Env {
@@ -79,6 +80,12 @@ function mainConfiguration(env: Env): Configuration {
                 }
             ]
         },
+
+        plugins: [
+            new CopyWebpackPlugin({
+                patterns: ["../../package.json"]
+            })
+        ]
 
     };
 } // end main configuration

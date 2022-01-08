@@ -19,14 +19,14 @@
   "bugs": {
     "url": "https://github.com/marceloaugusto80/electron-react-typescript-boilerplate/issues"
   },
-  "main": "dist/main-process.js",
+  "main": "main-process.js",
   "scripts": {
     "test": "npx jest",
     "build": "npx webpack",
     "build:prod": "npx webpack --env production",
     "start": "npx concurrently \"npx webpack serve --config-name renderer --env hot-reload\" \"npx webpack --config-name main && npx electron ./dist/main-process.js\" --kill-others --kill-others-on-fail",
     "start:prod": "npm run build:prod && npx electron ./dist/main-process.js",
-    "pack": "npx rimraf ./pack && npm run build-prod && npx electron-packager ./dist --out ./pack --overwrite"
+    "pack": "npx rimraf ./pack && npm run build:prod && npx electron-packager ./dist --out ./pack --overwrite"
   },
   "dependencies": {
     "@electron/remote": "^2.0.1",
@@ -55,6 +55,7 @@
     "babel-loader": "^8.2.3",
     "clean-webpack-plugin": "^4.0.0",
     "concurrently": "^7.0.0",
+    "copy-webpack-plugin": "^10.2.0",
     "electron-packager": "^15.4.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
