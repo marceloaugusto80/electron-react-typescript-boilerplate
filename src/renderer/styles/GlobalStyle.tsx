@@ -9,7 +9,6 @@ export const GlobalStyle = createGlobalStyle`
         margin: 0 !important;
         padding: 0 !important;
         font-family: Roboto;
-        font-weight: 600;
     }
 
     a {

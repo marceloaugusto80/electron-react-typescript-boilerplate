@@ -18,8 +18,11 @@ export function ExampleView1() {
     return (
         <div>
             <h1>Example view 1</h1>
+            <h3>Just a example view</h3>
+            <p>An image:</p>
             <img src={clock} />
-            <p>{theNumber}</p>
+            <p>A counter:</p>
+            <p><strong>{theNumber}</strong></p>
         </div>
     );
 

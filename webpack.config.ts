@@ -120,10 +120,6 @@ function RendererConfiguration(env: Env): Configuration {
             electronRenderer: true
         },
 
-        mode: env.development ? "development" : "production",
-
-        devtool: env.development ? "source-map" : undefined,
-
         entry: {
             "renderer-process": "./renderer-process.tsx"
         },
