@@ -1,7 +1,4 @@
 {
-  "compileOnSave": false,
-  "include": ["**/*.ts"],
-  "exclude": ["node_modules/**"],
   "compilerOptions": {
     "target": "es6",
     "module": "CommonJS",
@@ -11,11 +8,11 @@
     "strict": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "paths": {
-      "@/shared/*" :   ["shared/*"],
-      "@/renderer/*" : ["renderer/*"],
-      "@/main/*" :     ["main/*"]
+      "@/shared/*" :   ["src/shared/*"],
+      "@/renderer/*" : ["src/renderer/*"],
+      "@/main/*" :     ["src/main/*"]
     }
   }
 }

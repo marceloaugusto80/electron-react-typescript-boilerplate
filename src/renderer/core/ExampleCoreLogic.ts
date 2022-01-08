@@ -1,5 +1,8 @@
 type TimerCallback = (n: number) => void;
 
+/**
+ * Just an example class.
+ */
 export default class ExampleCoreLogic {
 
     private readonly _onTickCallback: TimerCallback;

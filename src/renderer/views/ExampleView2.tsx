@@ -8,13 +8,18 @@ export function ExampleView2() {
 
     const handleOpenFileClick = async () => {
         try {
+            
             const result = await dialog.showOpenDialog({ properties: ["openFile"] });
             const { filePaths } = result;
             if (filePaths.length != 1) return;
+
             const response = await fs.promises.readFile(filePaths[0], { encoding: "utf-8" });
-            if (typeof response == "string") setText(response);
+            setText(response);
+        
         } catch (error) {
+        
             setText((error as Error).message);
+        
         }
     }
 

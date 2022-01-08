@@ -5,6 +5,7 @@ interface ThemeColor {
     contrast: string;
 }
 
+// allow intellisense and avoid tsc warnings or errors
 declare module "styled-components" {
     export interface DefaultTheme {
         colors: {

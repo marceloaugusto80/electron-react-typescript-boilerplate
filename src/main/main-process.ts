@@ -3,11 +3,12 @@ import { initialize, enable } from "@electron/remote/main";
 
 declare const ENVIRONMENT: String;
 
-const IS_DEV = (ENVIRONMENT == "development");
-const DEV_SERVER_URL = "http://localhost:9000";
+const IS_DEV = (ENVIRONMENT == "development"); // const injected via webpack define plugin.
+const DEV_SERVER_URL = "http://localhost:9000"; // must match webpack dev server port.
 const HTML_FILE_PATH = "renderer/index.html";
 
 function createWindow(): BrowserWindow | null {
+    
     let win: BrowserWindow | null = new BrowserWindow({
         width: 800,
         height: 600,
@@ -28,7 +29,6 @@ function createWindow(): BrowserWindow | null {
 
     return win;
 }
-
 
 app.whenReady()
     .then(() => {
