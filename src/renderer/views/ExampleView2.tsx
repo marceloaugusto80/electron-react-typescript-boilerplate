@@ -1,14 +1,17 @@
-import React, { useState} from 'react';
+import React, { Fragment, useState } from 'react';
+import {dialog} from "@electron/remote";
+import fs from "fs";
 
 export function ExampleView2() {
 
-    const [text, setText] = useState("Open a file to display content here");
+    const [text, setText] = useState<string|null>(null);
 
-    const onFileInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {files} = e.currentTarget;
-        if(!files || files.length != 1) return;
+    const handleOpenFileClick = async () => {
         try {
-            const response =  await window.sharedContext.readFileAsync(files[0].path);
+            const result = await dialog.showOpenDialog({ properties: ["openFile"] });
+            const { filePaths } = result;
+            if (filePaths.length != 1) return;
+            const response = await fs.promises.readFile(filePaths[0], { encoding: "utf-8" });
             if (typeof response == "string") setText(response);
         } catch (error) {
             setText((error as Error).message);
@@ -18,10 +21,16 @@ export function ExampleView2() {
     return (
         <div>
             <h1>Example view 2</h1>
-            <p>Open a file</p>
-            <input type="file" multiple={false} onChange={onFileInputChange} />
-            <p>File content:</p>
-            <p>{text}</p>
+            <p>Try to open a file</p>
+            <button onClick={handleOpenFileClick}>Open file...</button>
+            {
+                text &&
+                <Fragment>
+                    <p>File content:</p>
+                    <p><code>{text}</code></p>
+                    <button onClick={()=>setText(null)}>Clear</button>
+                </Fragment>
+            }
         </div>
     );
 

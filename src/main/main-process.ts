@@ -1,24 +1,20 @@
-import { app, BrowserWindow, ipcMain } from "electron";
-import path from "path";
-import fs from "fs";
+import { app, BrowserWindow } from "electron";
+import {initialize, enable} from "@electron/remote/main";
 
 declare const ENVIRONMENT: String;
 
 const IS_DEV              = (ENVIRONMENT == "development");
 const DEV_SERVER_URL      = "http://localhost:9000";
 const HTML_FILE_PATH      = "renderer/index.html";
-const PRELOAD_SCRIPT_PATH = path.resolve(__dirname, "preload.js");
-
-let win: BrowserWindow | null = null;
 
 
+let win: Electron.CrossProcessExports.BrowserWindow | null = null;
 function createWindow() {
     win = new BrowserWindow({
         width: 800,
         height: 600,
         webPreferences: {
             nodeIntegration: true,
-            preload: PRELOAD_SCRIPT_PATH,
             contextIsolation: false
         }
     });
@@ -30,7 +26,7 @@ function createWindow() {
     else {
         win.loadFile(HTML_FILE_PATH);
     }
-
+    
     win.on("closed", () => {
         win = null
     })
@@ -38,6 +34,9 @@ function createWindow() {
 
 app.on("ready", () => {
     createWindow();
+    initialize();
+    if(!win?.webContents) throw Error("Web contents not initialized!");
+    enable(win?.webContents);
 });
 
 app.on('window-all-closed', () => {
@@ -51,13 +50,3 @@ app.on('activate', () => {
         createWindow()
     }
 })
-
-ipcMain.handle("file-msg", async (ev, arg: string) => {
-    try {
-        const content = await fs.promises.readFile(arg, { encoding: "utf-8" });
-        return content;
-    } catch (error) {
-        // TODO better error handling
-        return null;
-    }
-});
