@@ -2,39 +2,44 @@
 ![](./.github/project-logo-400.jpg) 
 
 
-#### Template project for desktop apps using [Electron](https://electronjs.org/), [React](https://reactjs.org/) and [Typescript](https://www.typescriptlang.org/).
+#### Template project for desktop apps using:
+- [Electron](https://electronjs.org/)
+- [Typescript](https://www.typescriptlang.org/)
+- [React](https://reactjs.org/)
+- [Styled Components](https://styled-components.com/)
+- [Webpack](https://webpack.js.org/)
+- [React Fast Refresh](https://github.com/pmmmwh/react-refresh-webpack-plugin)
 
----
 <br>
 <br>
 
 # Before anything
 As always, install packages:
-```
-npm install
+```cmd
+$ npm install
 ```
 
 
 # During development
 
 Run:
-```
-npm start
+```cmd
+$ npm start
 ```
 It will launch webpack dev server and electron [concurrently](https://www.npmjs.com/package/concurrently).
 It has [fast refresh](https://www.npmjs.com/package/react-refresh-webpack-plugin) (AKA hot-reload) enabled by default.
 
 # Testing
 Run:
-```
-npm test
+```cmd
+$ npm test
 ```
 This templated uses [Jest](https://jestjs.io/) (along with [Ts-Jest](https://www.npmjs.com/package/ts-jest)) as testing framework.
 
 # Deploy
 Just run:
-```
-npm run pack
+```cmd
+$ npm run pack
 ```
 and the output will be in the ```./pack``` folder.
 
