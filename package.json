@@ -24,10 +24,8 @@
     "test": "npx jest",
     "build": "npx webpack",
     "build:prod": "npx webpack --env production",
-    "start:renderer": "npx webpack serve --config-name renderer --env hot-reload",
-    "start:electron": "npx webpack --config-name main && npx electron ./dist/main-process.js",
-    "start": "npx concurrently \"npm run start:*\" --kill-others --kill-others-on-fail",
-    "run-prod": "npm run build:prod && npx electron ./dist/main-process.js",
+    "start": "npx concurrently \"npx webpack serve --config-name renderer --env hot-reload\" \"npx webpack --config-name main && npx electron ./dist/main-process.js\" --kill-others --kill-others-on-fail",
+    "start:prod": "npm run build:prod && npx electron ./dist/main-process.js",
     "pack": "npx rimraf ./pack && npm run build-prod && npx electron-packager ./dist --out ./pack --overwrite"
   },
   "dependencies": {

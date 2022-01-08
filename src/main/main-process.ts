@@ -1,16 +1,14 @@
 import { app, BrowserWindow } from "electron";
-import {initialize, enable} from "@electron/remote/main";
+import { initialize, enable } from "@electron/remote/main";
 
 declare const ENVIRONMENT: String;
 
-const IS_DEV              = (ENVIRONMENT == "development");
-const DEV_SERVER_URL      = "http://localhost:9000";
-const HTML_FILE_PATH      = "renderer/index.html";
+const IS_DEV = (ENVIRONMENT == "development");
+const DEV_SERVER_URL = "http://localhost:9000";
+const HTML_FILE_PATH = "renderer/index.html";
 
-
-let win: Electron.CrossProcessExports.BrowserWindow | null = null;
-function createWindow() {
-    win = new BrowserWindow({
+function createWindow(): BrowserWindow | null {
+    let win: BrowserWindow | null = new BrowserWindow({
         width: 800,
         height: 600,
         webPreferences: {
@@ -18,35 +16,46 @@ function createWindow() {
             contextIsolation: false
         }
     });
-    win.maximize();
-    win.webContents.openDevTools();
+
     if (IS_DEV) {
+        win.webContents.openDevTools();
         win.loadURL(DEV_SERVER_URL);
     }
     else {
         win.loadFile(HTML_FILE_PATH);
+        win.removeMenu();
     }
-    
-    win.on("closed", () => {
-        win = null
-    })
+
+    return win;
 }
 
-app.on("ready", () => {
-    createWindow();
-    initialize();
-    if(!win?.webContents) throw Error("Web contents not initialized!");
-    enable(win?.webContents);
-});
 
-app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-        app.quit()
-    }
-})
+app.whenReady()
+    .then(() => {
 
-app.on('activate', () => {
-    if (win === null) {
-        createWindow()
-    }
-})
+        let win = createWindow();
+        if (!win) throw Error("BrowserWindow is null. Check main process initialization!");
+        initialize();
+
+        win.maximize();
+        enable(win?.webContents);
+
+
+        win.on("closed", () => {
+            win = null;
+        });
+
+
+        app.on('window-all-closed', () => {
+            if (process.platform != "darwin") {
+                app.quit()
+            }
+        })
+
+        app.on('activate', () => {
+            if (win === null) {
+                createWindow()
+            }
+        })
+
+    });

@@ -6,6 +6,7 @@
     "target": "es6",
     "module": "CommonJS",
     "jsx": "react",
+    "resolveJsonModule": true,
     "sourceMap": true,
     "strict": true,
     "moduleResolution": "node",
