@@ -7,6 +7,7 @@ import { TsconfigPathsPlugin } from "tsconfig-paths-webpack-plugin";
 import CopyWebpackPlugin from "copy-webpack-plugin";
 import {merge} from "webpack-merge";
 
+// wraps env vars injected by webpack cli
 interface Env {
     development: boolean;
     hotReload: boolean;
@@ -83,7 +84,7 @@ function mainConfiguration(env: Env): Configuration {
 
         plugins: [
             new CopyWebpackPlugin({
-                patterns: ["../../package.json"]
+                patterns: ["../../package.json"] // electron packager need this file to pack the application. not needed during development.
             })
         ]
 
