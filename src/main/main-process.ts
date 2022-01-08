@@ -38,13 +38,11 @@ app.whenReady()
         initialize();
 
         win.maximize();
-        enable(win?.webContents);
-
+        enable(win.webContents);
 
         win.on("closed", () => {
             win = null;
         });
-
 
         app.on('window-all-closed', () => {
             if (process.platform != "darwin") {

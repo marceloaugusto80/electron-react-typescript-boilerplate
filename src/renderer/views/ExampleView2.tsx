@@ -26,7 +26,8 @@ export function ExampleView2() {
     return (
         <div>
             <h1>Example view 2</h1>
-            <p>Try to open a file</p>
+            <h3>Another example view.</h3>
+            <p>Try to open a file to test electron dialog and file system:</p>
             <button onClick={handleOpenFileClick}>Open file...</button>
             {
                 text &&
