@@ -49,7 +49,6 @@ function mainConfiguration(env: Env): Configuration {
         },
 
         entry: {
-            "preload": "./preload.ts",
             "main-process": "./main-process.ts"
         },
 
