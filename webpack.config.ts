@@ -5,7 +5,7 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
 import { TsconfigPathsPlugin } from "tsconfig-paths-webpack-plugin";
 import CopyWebpackPlugin from "copy-webpack-plugin";
-import {merge} from "webpack-merge";
+import { merge } from "webpack-merge";
 
 // wraps env vars injected by webpack cli
 interface Env {
